@@ -2,4 +2,5 @@ export(dcos,
     lum.sol,
     loglum.ergs,
     dtrans,
+    ascale,
     vrel)

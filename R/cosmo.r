@@ -63,7 +63,7 @@ dcos <- function(z, H0=70, Omega.m=0.27, Omega.l=1-Omega.m) {
 
   for (i in 1:nz) dT[i] <- 3.261564*dH*integrate(ft, lower=0, upper=z[i])$value
 
-  return(list(dC=dC, dM=dM, dA=dA, dL=dL, dm=dm, dT=dT, dVc=dVc, Vc=Vc))
+  list(dC=dC, dM=dM, dA=dA, dL=dL, dm=dm, dT=dT, dVc=dVc, Vc=Vc)
 }
 
 ## Flux to luminosity over solar bolometric luminosity
@@ -77,14 +77,14 @@ lum.sol <- function(flux, z, ...) {
   dL <- dcos(z, ...)$dL
   lum <- 4*pi*0.01*(3.085678)^2/3.839*flux*dL^2
   lum[lum<0] <- NA
-  return(lum)
+  lum
 }
 
 loglum.ergs <- function(flux, z, ...) {
   dL <- dcos(z, ...)$dL
   lum <- 4*pi*(3.085678)^2*flux*dL^2
   lum[lum<0] <- NA
-  return(31+log10(lum))
+  31+log10(lum)
 }
 
 
@@ -99,7 +99,14 @@ dtrans <- function(ra, dec, z0, ra0, dec0, ...) {
   dx <- cos(ra)*cos(dec)-cos(ra0)*cos(dec0)
   dy <- sin(ra)*cos(dec)-sin(ra0)*cos(dec0)
   dz <- sin(dec)-sin(dec0)
-  return(dm * sqrt(dx^2+dy^2+dz^2))
+  dm * sqrt(dx^2+dy^2+dz^2)
+}
+
+## angular diameter scale at z in kpc/arcsec
+
+ascale <- function(z, ...) {
+    dA <- dcos(z, ...)$dA*1000
+    dA * tan(pi/(180*3600))
 }
 
 # velocity relative to a reference z = zbar

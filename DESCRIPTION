@@ -1,5 +1,5 @@
 Package: cosmo
-Version: 0.1.0
+Version: 0.1.1
 Title: Cosmological distances
 Authors@R: person("Michael", "Peck", role=c("aut", "cre"),
            email = "mlpeck54@earthlink.net")
